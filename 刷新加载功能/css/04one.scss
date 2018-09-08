@@ -1,0 +1,31 @@
+@charset "utf-8";
+header,footer{
+    display:flex;
+    justify-content: space-around;
+    align-items:center;
+    height:5rem;
+    background:red;
+    font:600 3rem 微软雅黑;
+    border:1px solid red;
+}
+main{
+    height:29rem;
+    overflow:hidden;
+    border:1px solid red;
+    >ol{
+        height:45rem;
+        li{
+            line-height:2rem;
+            border-bottom:1px solid red;
+        }
+        >p{
+            display:none;
+            text-align:center;
+        }
+    }
+}
+#btn{
+    height:3rem;
+    text-align:center;
+    font:500 2rem 微软雅黑;
+}

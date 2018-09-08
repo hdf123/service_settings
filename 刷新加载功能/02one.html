@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>02——IScroll</title>
+		<script src="../js/zepto.js"></script>
+		<script src="js/iscroll-probe.js"></script>
+	</head>
+	<style>
+		*{margin:0;padding:0;list-style:none;}
+		html,body,#box{
+			height:100%;
+			display:flex;
+			flex-direction:column;
+			font:600 3vw 微软雅黑;
+			text-align:center;
+			line-height:4vw;
+		}
+		#box{display:flex;flex-direction:column;}
+		#uu1>li{
+			border-bottom:1px solid gray;
+			box-sizing:border-box;
+			font:600 3vw 微软雅黑;
+			text-align:center;
+		}
+		#uu1>p{
+			display:none;
+		}
+		.da1{
+			flex-grow:1;
+			overflow:hidden;
+		}
+	</style>
+	<body>
+		<div id="box">
+			<header>头部</header>
+			<div class="da1">
+				<ul id="uu1">
+					<p>松开刷新</p>
+				</ul>
+			</div>
+			<footer>尾部</footer>
+		</div>
+	</body>
+	<script>
+		for(var i=0;i<=100;i++){
+			uu1.innerHTML+='<li>'+i+'</li>';
+		}
+		var my;
+		function load1(){
+			var flag=false;
+			setTimeout(function(){
+				my=new IScroll(".da1",{
+//					bounce:false,//下拉反弹效果
+//					click:true,//是否启用click事件，默认false不启用，不好用
+//					disableTouch:true,//是否关闭触摸事件探测,默认false
+//					scrollX:true,//X轴滚动
+//					scrollY:false,//Y轴滚动
+					//probeType:3,需要使用iscroll-probe.js才能生效,1 滚动不繁;2滚动时每隔一定时间触发;3每滚动一像素触发一次
+					probeType:3,
+//					zoom:true,//开启缩放，最好使用iscroll-zoom.js脚本。
+//					mouseWheel: true,//是否监听鼠标 滚轮事件。
+//					zoomMax:4,//最大缩放等级
+//					zoomMin:1,//最小缩放等级
+//					startZoom:1,//初始缩放等级
+//					wheelAction:'zoom',//放大缩小滚轮动作设为’zoom’，可以用滚轮缩放
+//					scrollbars:true,//是否显示默认滚动条,默认false
+//					fadeScrollbars:true,//是否渐隐滚动条，关掉可以加速
+//					interactiveScrollbars:true,//用户是否可以拖动滚动条,默认false
+				});
+				//添加一个滚动事件
+//				beforeScrollStart:用户点击屏幕,但是还未初始化滚动前
+//				scrollCancel:初始化滚动后又取消
+//				scrollStart:开始滚动
+//				scroll:滚动中
+//				scrollEnd:滚动结束
+//				flick:轻击屏幕左右
+//				zoomStart:开始缩放
+//				zoomEnd:缩放结束
+				my.on("scroll",function(){//刷新要两个事件，scroll,滚动触发
+					$("#uu1>p").show();//获取到顶部的距离
+					if(this.y>=50){//当前位置
+						flag=true;
+					}
+				})
+				my.on("scrollEnd",function(){//滚动结束
+					if(flag){
+						$("#uu1>p").text("正在刷新...");
+						setTimeout(function(){
+							$("#uu1 p").hide();
+//							$("<li>走吧</li>").insertAfter("#uu1>p");//添加到p前面
+							$("#uu1>p").after("<li>走吧</li>");//添加到p前面
+							flag=false;
+							$("#uu1 p").text("松开刷新...");
+							my.refresh();//立即刷新
+						},1000)
+					}else{
+						$("#uu1>p").hide();
+					}
+				})
+			},100)
+		}
+		window.addEventListener("load",load1,false)
+	</script>
+</html>
