@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+	<script type="text/javascript">
+		$.ajax({
+			type:"get",//请求方式
+			url:"http://192.168.1.106:6678/json1",//请求路径,打开server.js
+//			url:"../json/json1.json",//请求路径.不用server.js，仅支持get
+			async:"true",//是否异步
+			dataType:"json",//一定是json 确保json格式正确
+			success:function(data){//请求成功后调用
+				console.log(data);
+			},error:function(err){
+				console.log(err);
+			}
+		})
+	</script>
+	</body>
+</html>
